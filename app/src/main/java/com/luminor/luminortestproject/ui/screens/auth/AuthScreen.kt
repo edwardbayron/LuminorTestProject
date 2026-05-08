@@ -25,6 +25,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -87,12 +88,18 @@ fun AuthScreen(
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp),
+                .heightIn(min = 56.dp, max = 56.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,
                 focusedContainerColor = Color.White,
-                focusedBorderColor = Color.Black
+                focusedBorderColor = Color.Black,
+                unfocusedBorderColor = Color.Gray,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black,
+                focusedLabelColor = Color.Black,
+                unfocusedLabelColor = Color.Black,
+                cursorColor = Color.Black
             )
         )
 
@@ -116,11 +123,17 @@ fun AuthScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(56.dp),
+                .heightIn(min = 56.dp, max = 56.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,
                 focusedContainerColor = Color.White,
-                focusedBorderColor = Color.Black
+                focusedBorderColor = Color.Black,
+                unfocusedBorderColor = Color.Gray,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black,
+                focusedLabelColor = Color.Black,
+                unfocusedLabelColor = Color.Black,
+                cursorColor = Color.Black
             )
         )
 
