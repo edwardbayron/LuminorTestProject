@@ -1,6 +1,7 @@
 package com.luminor.luminortestproject.ui.screens.auth
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,13 +17,14 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,16 +55,17 @@ fun AuthScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp),
+            .background(Color.White)
+            .padding(horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+            painter = painterResource(id = R.drawable.app_logo),
             contentDescription = "Logo",
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(100.dp)
+                .size(146.dp)
                 .clip(CircleShape)
         )
 
@@ -71,7 +74,8 @@ fun AuthScreen(
         Text(
             text = "Authentication",
             fontSize = 24.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -81,9 +85,15 @@ fun AuthScreen(
             onValueChange = { email = it },
             label = { Text("E-mail") },
             singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            colors = TextFieldDefaults.colors()
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedContainerColor = Color.White,
+                focusedContainerColor = Color.White,
+                focusedBorderColor = Color.Black
+            )
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -99,12 +109,19 @@ fun AuthScreen(
                 IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
                     Icon(
                         imageVector = if (passwordVisibility) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                        contentDescription = if (passwordVisibility) "hide password" else "show password"
+                        contentDescription = if (passwordVisibility) "hide password" else "show password",
+                        tint = Color.Black
                     )
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors()
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedContainerColor = Color.White,
+                focusedContainerColor = Color.White,
+                focusedBorderColor = Color.Black
+            )
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -113,9 +130,9 @@ fun AuthScreen(
             onClick = onNavigateToDashboard,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp),
-            shape = RoundedCornerShape(8.dp),
-            colors = androidx.compose.material3.ButtonDefaults.textButtonColors(
+                .height(40.dp),
+            shape = RoundedCornerShape(100.dp),
+            colors = ButtonDefaults.textButtonColors(
                 containerColor = Color.Black,
                 contentColor = Color.White
             )
@@ -144,10 +161,10 @@ fun AuthScreen(
             onClick = onNavigateToDashboard,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp),
-            shape = RoundedCornerShape(8.dp),
-            colors = androidx.compose.material3.ButtonDefaults.textButtonColors(
-                containerColor = Color(0xFF80DEEA),
+                .height(40.dp),
+            shape = RoundedCornerShape(100.dp),
+            colors = ButtonDefaults.textButtonColors(
+                containerColor = Color(0xFF89CFDF),
                 contentColor = Color.White
             )
         ) {
