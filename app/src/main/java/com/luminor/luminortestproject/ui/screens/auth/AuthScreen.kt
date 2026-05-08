@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -25,7 +26,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +44,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.luminor.luminortestproject.R
+import com.luminor.luminortestproject.util.isValidEmail
+import com.luminor.luminortestproject.util.isValidPassword
 
 @Composable
 fun AuthScreen(
@@ -52,6 +54,10 @@ fun AuthScreen(
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisibility by rememberSaveable { mutableStateOf(false) }
+
+    var emailError by rememberSaveable { mutableStateOf<String?>(null) }
+    var passwordError by rememberSaveable { mutableStateOf<String?>(null) }
+    var loginError by rememberSaveable { mutableStateOf<String?>(null) }
 
     Column(
         modifier = Modifier
@@ -83,18 +89,25 @@ fun AuthScreen(
 
         OutlinedTextField(
             value = email,
-            onValueChange = { email = it },
+            onValueChange = {
+                email = it
+                emailError = null
+                loginError = null
+            },
             label = { Text("E-mail") },
             singleLine = true,
+            isError = emailError != null,
+            supportingText = emailError?.let { { Text(it, color = Color.Red) } },
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 56.dp, max = 56.dp),
+                .heightIn(min = 56.dp, max = 100.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,
                 focusedContainerColor = Color.White,
                 focusedBorderColor = Color.Black,
                 unfocusedBorderColor = Color.Gray,
+                errorBorderColor = Color.Red,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black,
                 focusedLabelColor = Color.Black,
@@ -107,9 +120,15 @@ fun AuthScreen(
 
         OutlinedTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = {
+                password = it
+                passwordError = null
+                loginError = null
+            },
             label = { Text("Password") },
             singleLine = true,
+            isError = passwordError != null,
+            supportingText = passwordError?.let { { Text(it, color = Color.Red) } },
             visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             trailingIcon = {
@@ -123,12 +142,13 @@ fun AuthScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 56.dp, max = 56.dp),
+                .heightIn(min = 56.dp, max = 100.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 unfocusedContainerColor = Color.White,
                 focusedContainerColor = Color.White,
                 focusedBorderColor = Color.Black,
                 unfocusedBorderColor = Color.Gray,
+                errorBorderColor = Color.Red,
                 focusedTextColor = Color.Black,
                 unfocusedTextColor = Color.Black,
                 focusedLabelColor = Color.Black,
@@ -137,10 +157,34 @@ fun AuthScreen(
             )
         )
 
+        loginError?.let {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(it, color = Color.Red, fontSize = 14.sp)
+        }
+
         Spacer(modifier = Modifier.height(24.dp))
 
         TextButton(
-            onClick = onNavigateToDashboard,
+            onClick = {
+                var hasError = false
+                if (email.isBlank()) {
+                    emailError = "E-mail is required"
+                    hasError = true
+                } else if (!isValidEmail(email)) {
+                    emailError = "Invalid e-mail format"
+                    hasError = true
+                }
+                if (password.isBlank()) {
+                    passwordError = "Password is required"
+                    hasError = true
+                } else if (!isValidPassword(password)) {
+                    passwordError = "Password must be at least 6 characters"
+                    hasError = true
+                }
+                if (!hasError) {
+                    onNavigateToDashboard()
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(40.dp),
@@ -171,7 +215,26 @@ fun AuthScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         TextButton(
-            onClick = onNavigateToDashboard,
+            onClick = {
+                var hasError = false
+                if (email.isBlank()) {
+                    emailError = "E-mail is required"
+                    hasError = true
+                } else if (!isValidEmail(email)) {
+                    emailError = "Invalid e-mail format"
+                    hasError = true
+                }
+                if (password.isBlank()) {
+                    passwordError = "Password is required"
+                    hasError = true
+                } else if (!isValidPassword(password)) {
+                    passwordError = "Password must be at least 6 characters"
+                    hasError = true
+                }
+                if (!hasError) {
+                    onNavigateToDashboard()
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(40.dp),
