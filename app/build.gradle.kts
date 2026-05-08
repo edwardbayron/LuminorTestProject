@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.luminor.luminortestproject"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.luminor.luminortestproject"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
